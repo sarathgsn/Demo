@@ -1,0 +1,8 @@
+
+
+All computers run using very low-level commands which do some very basic functions, such as reading data, writing data, jumping to addresses, and calculating basic arithmetic. (The complete list of commands that can be run by a CPU is known as that computer’s instruction set). Instruction sets are relatively small; most higher-order programming languages, such as C++, Ada, Fortran, or Visual Basic, must be compiled (or translated, or interpreted) into these low level commands in order for a program to run.
+
+
+One way of categorizing computer architectures is by number of instructions executed per clock. 
+Another way of categorizing computer architectures is by the connection(s) between the CPU and memory
+Another way to categorize CPUs is by their clock. Most computers are synchronous -- they have a single global clock. A few CPUs are asynchronous -- they don't have a clock 

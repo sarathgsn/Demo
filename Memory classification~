@@ -1,0 +1,50 @@
+Accessibility
+
+Memory devices can provide Random Access, Serial Access or Block Access. In a Random Access memory, each word in memory can be directly accessed by specifying the address of this memory word. RAM, SDRAMs, and NOR Flash are examples of Random Access Memories. In a Serial Access Memory, all the previous words (previous to the word being accessed) need to be accessed, before accessing a desired word. I2C PROM and SPI PROM are examples of Serial Access Memories. In Block Access Memories, entire memory is sub-divided in to small blocks (generally of the order of a KByte) of memory. Each block can be randomly accessed, and each word in a given block can be serially accessed. Hard Disks and NAND flash employ a similar mechanism. Word access time for a “RAM” (Random Access Memory) is independent of the word location. This is desirable of high speed application making frequent access to the memory.
+
+Storage Cells
+
+Memory Device may employ electronic (in terms of transistors or electron states) storage, magnetic storage or optical storage. RAM, SDRAM are examples of electronic storage. Hard Disks are example of magnetic storage. CDs (Compact Discs) are example of optical storage. Old Computers also employed magnetic storage (magnetic storages are still common in some consumer electronics products).
+
+Storage Density & Cost
+
+Storage Density (number of bits which can be stored per unit area) is generally a good meausre of cost. Dense memories (like SDRAM) are much cheaper than their counterparts (like SRAM)
+
+The number of words which can be stored in a RAM are proportional (exponential of two) to the number of address buses available. This severely restricts the storage capacity of RAMs (A 32 GB RAM will require 36 Address lines) because designing circuit boards with more signal lines directly adds to the complexity and cost.
+
+Dynamic RAM
+
+Dynamic RAMs use a different storage technique for data storage. A Static RAM has four transistors per memory cell, whereas Dynamic RAMs have only one transistor per memory cell. The DRAMs use capactive storage. Since the capacitor can loose charge, these memories need to be refreshed periodically. This makes DRAMs more complex (because we need to have extra control) and power consuming. However, DRAMs have a very high storage density (as compared to static RAMs) and are much cheaper in cost. DRAMs are generally accessed in terms of rows, columns and pages which significantly reduces the number of address buses (another advantage over RAM). Generally you need a SDRAM controller (which manages different SDRAM commands and Address translation) to access a SDRAM. Most of the modern processors come with an on-chip SDRAM controller.
+
+Flash (NOR)
+
+Flash (or NOR-Flash to be more accurate) are quite similar to EEPROM in usage and can be considered in the class of EEPROM (since it is electically erasable). However there are a few differences. Firstly, the flash devices are in-circuit programmable. Secondly, these are much cheaper as compared to the conventional EEPROMs. These days (NOR) Flash are widely used for storing the boot code.
+
+NAND FLASH
+
+These memories are more dense and cheaper than NOR Flash. However these memories are block accessible, and can not be used for code execution. These devices are mostly used for Data Storage (since it is cheaper than NOR flash). However some systems use them for storing the boot codes (these can be used with external hardware or with built-in NAND boot logic in the processor).
+
+The typical access time (read time) for ROM is much higher than the typical access time of RAMs (e.g. SDRAM). Hence executing code from ROM is not desirable in a system which employs high speed processor. The slow memory accesses will become bottle neck for the processor's control and execution unit (which would have been able to run faster in combination with a faster memory).
+
+EPROM and EEPROM cells operate similarly to flash memory in how data is written, or programmed, but differ from flash memory in how data is erased. An EPROM is erased by removing the chip from the system and exposing the array to ultraviolet light. An EEPROM erases data electronically at the byte level, while flash memory erases data electronically at the block level.
+
+Devices using flash memory erase data at the block level and rewrite data at the byte level -- NOR flash -- or multiple-byte page level -- NAND flash. Flash memory is widely used for storage and data transfer in consumer devices, enterprise systems and industrial applications.
+
+
+
+NOR vs. NAND flash memory
+
+There are two types of flash memory: NOR and NAND.
+
+NOR and NAND flash memory differ in architecture and design characteristics. NOR flash uses no shared components and can connect individual memory cells in parallel, enabling random access to data. A NAND flash cell is more compact and has fewer bit lines, stringing together floating gate transistors to increase storage density.
+
+NAND is better suited to serial rather than random data access. NAND flash process geometries were developed in response to planar NAND reaching its practical scaling limit.
+
+NOR flash is fast on data reads, but it is typically slower than NAND on erases and writes. NOR flash programs data at the byte level. NAND flash programs data in pages, which are larger than bytes, but smaller than blocks. For instance, a page might be 4 kilobytes (KB), while a block might be 128 KB to 256 KB or megabytes in size. NAND flash consumes less power than NOR flash for write-intensive applications.
+
+NOR flash is more expensive to produce than NAND flash and tends to be used primarily in consumer and embedded devices for boot purposes and read-only applications for code storage. NAND flash is more suitable for data storage in consumer devices and enterprise server and storage systems due to its lower cost per bit to store data, greater density, and higher programming and erase (P/E) speeds.
+
+Devices, such as camera phones, may use both NOR and NAND flash, in addition to other memory technologies, to facilitate code execution and data storage
+
+
+

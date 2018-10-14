@@ -1,0 +1,22 @@
+RAM testing:
+
+Memory testing.7
+Stuck-At Fault
+•
+The logic value of a cell or a line is always 0 or 1.
+Transition Fault
+•
+A cell or a line that fails to undergo a 0     1 or a 1    0
+transition.
+Coupling Fault
+•
+A write operation to one cell changes the content of
+a second cell.
+
+
+Data lines testing:
+
+To perform the walking 1's test, simply write the first data value in the table, verify it by reading it back, write the second value, verify, etc. When you reach the end of the table, the test is complete. It is okay to do the read immediately after the corresponding write this time because we are not yet looking for missing chips. In fact, this test provides meaningful results even if the memory chips are not installed!
+
+Address lines testing:
+Memory device testing;

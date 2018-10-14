@@ -1,0 +1,19 @@
+#include <stdio.h>
+
+	int
+main()
+{
+	int i = 0;
+	if (i < 4) {
+		if (i == 3) {
+			goto statement;
+		}
+	}
+
+statement:
+	printf("i value = %d\n", i);
+	printf("second printf) \n");
+	printf("third printf) \n");
+
+	return 0:
+}

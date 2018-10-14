@@ -1,0 +1,132 @@
+
+Interrupts::
+
+Maskable amd non maskable ::
+
+Maskable Interrupt: Interrupt signals which can be ignored by processor, while processor doing crucial job it will ignore these kind of interrupts and continue in its state;
+
+
+Non Maskable Interrupt: These Interrupt signals will be not ignored and given attention all the time;
+
+
+
+process : A program which is active in the system 
+
+/proc/pid (process attributes)
+/proc/pid/status
+
+
+
+linux says 0 is highest priority 99 lowest priority but, posix standard says 99 highest prioryty, 0 is lowest priority , so linux kernell will do this conversions
+
+real time threads :: 1 to 99  ( FIFO or RR)
+non real time threads :: 100 - 139 (OTHER SCHEDULING)
+ PRIORITY:
+ task_struct :rt_prio filed  ,normal_prior
+ SCHEDULING POLICY:;
+	policy variable
+
+priority inversion ::
+It is problem when low priority thread is running at that time high priority task comes, it has to wait 
+
+priority inheritence:
+
+it is solution for that problem
+
+when ever higher priority tasks comes that low priority task inherit the highest task priority then it does it work then it comes back to its original priority 
+
+priority ceiling :
+
+here we will set one ceiling priority. this priority is higher than highest priority.
+so whenever a task either low or high priority task acquire a lock it goes to that ceiling priority.
+then it does it work then it comes back to original priority
+when low priority task is excuting at ceiling priority at that time highest pririty task comes but this priority is less than ceiling priority.
+
+
+
+
+
+
+
+
+realTime threads and non real time thread::
+
+based on priority and scheduling policy ( FIFO and RR);
+
+SEMAPHORE :
+
+Synchronisation ( 
+Synchronization means that you synchronize/order the access of multiple threads to the shared resource.)
+MUTEX :
+
+motual exclusion : (
+
+Mutual exclusion means that only a single thread should be able to access the shared resource at any given point of time. This avoids the race conditions between threads acquireing the resource. Monitors and Locks provide the functionality to do so. 
+}
+
+STAT Code
+Description
+S
+Sleeping. Usually waiting for an event to occur, such as a signal or input to
+become available.
+R
+Running. Strictly speaking, “runnable,” that is, on the run queue either
+executing or about to run.
+D
+Uninterruptible Sleep (Waiting). Usually waiting for input or output to
+complete.
+T
+Stopped. Usually stopped by shell job control or the process is under the
+control of a debugger.
+Z
+Defunct or “zombie” process.
+N
+Low priority task, “nice.”
+W
+Paging. (Not for Linux kernel 2.6 onwards.)
+s
+Process is a session leader.
++
+Process is in the foreground process group.
+l
+Process is multithreaded.
+<
+High priority task.
+
+
+
+
+ triggers the scheduler by using a timer interrupt::
+
+
+
+System processes tend to fall into two types: 
+interactive
+non-interactive:
+
+ Interactive processes are heavily dependent upon I/O and, as a result, do not usually use their entire timeslice and, instead, yield the CPU to another process. Non-interactive processes are heavily dependent on the CPU and typically use most, if not all, of their timeslice. The scheduler has to balance the requirements of these two types of processes and attempt to ensure every process gets enough time to accomplish its task without detrimentally affecting the execution of other processes.
+
+
+
+atomic operations:: 
+A code holding a semaphore can be preempted. It does not disable kernel preemption.
+
+ Atomic operation: This is the very simple approach to avoid race condition or deadlock.  Atomic operators are operations, like add and subtract, which perform in one clock cycle (uninterruptible operation). The atomic integer methods operate on a special data type, atomic_t. A common use of the atomic integer operations is to implement counters which is updated by multiple threads. The kernel provides two sets of interfaces for atomic operations, one that operates on integers and another that operates on individual bits. All atomic functions are inline functions.
+
+
+SEMAPHORE: Vs mutex::
+
+A mutex is essentially the same thing as a binary semaphore and sometimes uses the same basic implementation. The differences between them are in how they are used. While a binary semaphore may be used as a mutex, a mutex is a more specific use-case, in that only the thread that locked the mutex is supposed to unlock it. This constraint makes it possible to implement some additional features in mutexes:
+
+    Since only the thread that locked the mutex is supposed to unlock it, a mutex may store the id of thread that locked it and verify the same thread unlocks it.
+    Mutexes may provide priority inversion safety. If the mutex knows who locked it and is supposed to unlock it, it is possible to promote the priority of that thread whenever a higher-priority task starts waiting on the mutex.
+    Mutexes may also provide deletion safety, where the thread holding the mutex cannot be accidentally deleted.
+    Alternately, if the thread holding the mutex is deleted (perhaps due to an unrecoverable error), the mutex can be automatically released.
+    A mutex may be recursive: a thread is allowed to lock it multiple times without causing a deadlock.
+
+
+
+
+
+
+

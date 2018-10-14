@@ -1,0 +1,1 @@
+cmd_/home/sarath/sarath/kernel_threads/kernel_terminate.ko := ld -r -m elf_x86_64 -T ../scripts/module-common.lds --build-id  -o /home/sarath/sarath/kernel_threads/kernel_terminate.ko /home/sarath/sarath/kernel_threads/kernel_terminate.o /home/sarath/sarath/kernel_threads/kernel_terminate.mod.o ;  true

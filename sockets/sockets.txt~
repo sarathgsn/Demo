@@ -1,0 +1,54 @@
+/etc/services
+/etc/hosts
+
+A socket is a special file used for inter-process communication. These allow communication between two processes. In addition to sending data, processes can send file descriptors across a Unix domain socket connection using the sendmsg() and recvmsg() system.
+
+Unlike named pipes, sockets are fully duplex-capable.
+
+client needs to know of the existence of and the address of the server, but the server does not need to know the address 
+
+ The steps involved in establishing a socket on the client side are as follows:
+
+    Create a socket with the socket() system call
+    Connect the socket to the address of the server using the connect() system call
+    Send and receive data. There are a number of ways to do this, but the simplest is to use the read() and write() system calls. 
+
+The steps involved in establishing a socket on the server side are as follows:
+
+    Create a socket with the socket() system call
+    Bind the socket to an address using the bind() system call. For a server socket on the Internet, an address consists of a port number on the host machine.
+    Listen for connections with the listen() system call
+    Accept a connection with the accept() system call. This call typically blocks until a client connects with the server.
+    Send and receive data 
+
+
+When a socket is created, the program has to specify the address domain and the socket type. Two processes can communicate with each other only if their sockets are of the same type and in the same domain. There are two widely used address domains, the unix domain, in which two processes which share a common file system communicate, and the Internet domain, in which two processes running on any two hosts on the Internet communicate. Each of these has its own address format. 
+
+Stream Sockets − Delivery in a networked environment is guaranteed. If you send through the stream socket three items "A, B, C", they will arrive in the same order − "A, B, C". These sockets use TCP (Transmission Control Protocol) for data transmission. If delivery is impossible, the sender receives an error indicator. Data records do not have any boundaries.
+
+
+Datagram Sockets − Delivery in a networked environment is not guaranteed. They're connectionless because you don't need to have an open connection as in Stream Sockets − you build a packet with the destination information and send it out. They use UDP (User Datagram Protocol).Datagram Sockets − Delivery in a networked environment is not guaranteed. They're connectionless because you don't need to have an open connection as in Stream Sockets − you build a packet with the destination information and send it out. They use UDP (User Datagram Protocol).
+
+ A on a datagram socket may receive messages in a different order from the sequence in which the messages were sent.
+
+
+
+ Alternative types of sockets
+This example showed a stream socket in the Internet domain. This is the most common type of connection. A second type of connection is a datagram socket. You might want to use a datagram socket in cases where there is only one message being sent from the client to the server, and only one message being sent back. There are several differences between a datagram socket and a stream socket.
+
+    Datagrams are unreliable, which means that if a packet of information gets lost somewhere in the Internet, the sender is not told (and of course the receiver does not know about the existence of the message). In contrast, with a stream socket, the underlying TCP protocol will detect that a message was lost because it was not acknowledged, and it will be retransmitted without the process at either end knowing about this.
+    Message boundaries are preserved in datagram sockets. If the sender sends a datagram of 100 bytes, the receiver must read all 100 bytes at once. This can be contrasted with a stream socket, where if the sender wrote a 100 byte message, the receiver could read it in two chunks of 50 bytes or 100 chunks of one byte.
+ The communication is done using special system calls sendto() and receivefrom() rather than the more generic read() and write(). 
+
+
+
+
+Instead of identifying a server by an IP address and port, a UNIX domain socket is known by a pathname. Obviously the client and server have to agree on the pathname for them to find each other. The server binds the pathname to the socket:
+
+
+
+RAW socket:
+ A raw socket allows an application to directly access lower level protocols, which means a raw socket receives un-extracted packets 
+There is no need to provide the port and IP address to a raw socket, unlike in the case of stream and datagram sockets.
+
+By default, a machine receives those packets that have the same destination address as that of the machine, and this mode is called the non-promiscuous mode.. But if we want to receive all the packets, we have to switch into the promiscuous mode. We can go into the promiscuous mode with the help of ioctls.

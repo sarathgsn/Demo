@@ -1,0 +1,236 @@
+
+SMP: the same piece of kernel code is running in parallel on multiple processors while sharing all kernel data.
+
+Any data shared between multiple cores need to be protected by spinlocks. 
+
+
+Kernel Preemption: even for a uniprocessor system, the kernel is still concurrent if we allow kernel preemption. Specifically, a process running in kernel space during a system call is allowed to be preempted by another high priority process, which could also call into the kernel and access the same data. Thus, kernel data need to be protected from preemptions.
+
+
+
+
+
+
+userleve:If one user level thread perform blocking operation then entire process will be blocked.
+kernel:If one kernel thread perform blocking operation then another thread can continue execution.
+
+
+The
+significant difference between kernel threads and normal processes is that kernel threads do not have
+an address space (in fact, their mm pointer is NULL). They operate only in kernel-space and do not
+context switch into user-space. Kernel threads are, however, schedulable and preemptable as normal
+processes.
+
+
+struct task_struct *kthread_create(int (*thread fun)(void *data), void *data, name), ...);
+the process is created in unrunnable state , it will not start running untill explicitly woken up via wake_up_process();
+
+
+A process can be create and made runnable with a single function 
+	*kthread_run :it will call both create and wake up functions
+
+when started a kernel thread continues to exist untill it calls do_exit()  or
+
+another part of the kernel calls kthread_stop()
+
+
+
+Spinning vs Blocking
+●
+Spinning
+●
+If the lock is not free, repeatedly try to acquire the lock.
+●
+Blocking
+●
+If the lock is not free, add the thread to the lock's wait queue and context switch.
+●
+When to use which?
+●
+Spinning is good for small critical sections.
+●
+Also good on multiprocessors.
+●
+If the overhead of the context switch is less than the time spent waiting (spinning), 
+then blocking is preferable.
+–
+But remember the implicit overhead of context switching as well.
+●
+Spin locks are good for fine-grained work like you might see in your OS.
+●
+Blocking is good for coarse-grained work like protecting large data structures.
+
+
+
+
+
+Now, let’s try to understand the complications associated with the spinlock. Let’s say, thread T1 acquires the spinlock and enters the critical section. Meanwhile, some high priority thread T2 becomes runnable and preempts the thread T1. Now, thread T2 also tries to acquire the spinlock and since the lock is not available, T2 will spin. Now, since T2 has a higher priority, T1 won’t run ever and this in turn will result in deadlock. So, how do we avoid such scenarios? Spinlock code is designed in such a way that any time kernel code holds a spinlock, the preemption is disabled on the local processor. Therefore, its very important to hold a spinlock for minimum possible time. What if the spinlock is shared between the thread T1 and interrupt handler? For this, there is a variant of spinlock, which disables the interrupts on local processor.
+
+
+
+
+spinlock automatically 
+disables preemption
+, which 
+avoids deadlock caused by interrupts.
+•
+when data is shared with interrupt handler, before 
+holding spinlock we must 
+disable interrupts
+.
+•
+when data is shared with bottom halves, before 
+holding spinlock we must 
+disable bottom halves
+.
+
+
+
+
+
+
+
+
+
+
+
+
+user level threads:
+
+
+Threads, also known as light weight processes are the basic unit of CPU initialization. So, why do we call them as light weight processes? One of the reason is that the context switch between the threads takes much lesser time as compared to processes, which results from the fact that all the threads within the process share the same address space, so you don’t need to switch the address space. In the user space, threads are created using the POSIX APIs and are known as pthreads. Some of the advantages of the thread, is that since all the threads within the processes share the same address space, the communication between the threads is far easier and less time consuming as compared to processes. And usually is done through the global variables. This approach has one disadvantage though. It leads to several concurrency issues and require the synchronization mechanisms to handle the same.
+
+
+
+
+
+
+Advantages
+
+    Thread switching does not require Kernel mode privileges.
+    User level thread can run on any operating system.
+    Scheduling can be application specific in the user level thread.
+    User level threads are fast to create and manage.
+
+Disadvantages
+
+    In a typical operating system, most system calls are blocking.
+    Multithreaded application cannot take advantage of multiprocessing.
+
+Kernel Level Threads:
+The Kernel performs thread creation, scheduling and management in Kernel space. Kernel threads are generally slower to create and manage than the user threads.
+Advantages
+
+    Kernel can simultaneously schedule multiple threads from the same process on multiple processes.
+    If one thread in a process is blocked, the Kernel can schedule another thread of the same process.
+    Kernel routines themselves can be multithreaded.
+
+Disadvantages
+
+    Kernel threads are generally slower to create and manage than the user threads.
+    Transfer of control from one thread to another within the same process requires a mode switch to the Kernel.
+
+
+
+
+kthread_stop():
+
+kthread_stop() will wait_for_completion() of the kthread.
+
+
+ kthread_stop only makes suSo just by calling kthread_stop in the cleanup function we can not trerminte a thread in between unless the thread does not exit by itself. To be able to terminate a thread in between, i.e. as soon as kthread_stop is called, we need to make sure that thread keeps checking for the function kthread_should_stop. re that if the thread calls the function kthread_should_stop, then kthread_should_stop returns true. 
+
+
+
+
+
+
+
+
+
+  I forgot to mention that kthread_stop(), is indeed a blocking call. It waits for the thread to exit and since our thread is in while(1), so hopefully, it will never exit and unfortunately, our rmmod will never come out. So, what does this mean? What we can infer from this, is that the kthread_stop() is just the signal, not the command. Calling kthread_stop() doesn’t gives you a license to kill/stop the thread, instead it just sets the flag in the task_struct() of the thread and waits for the thread to exit. It’s totally upto the thread to decide, when it would like to exit.  So, why is such a thing? Well, just think of the scenario where kernel thread has allocated a memory and would free it up once it exits. Had it been allowed to be killed in middle, thread would never be able to free up the memory. This, in turn would result in memory leak.
+
+
+
+Scheduling
+●
+You need to make sure to block kthread when not doing 
+anything
+●
+Otherwise it will continue to run and eat resources with 
+nothing to do
+●
+A couple of common ways
+–
+schedule()
+–
+ssleep()
+
+#include <linux/sched.h>
+●
+void schedule(void)
+●
+Blocks the kthread for a preset interval
+
+ssleep
+●
+#include <linux/delay.h>
+●
+void ssleep(unsigned int seconds)
+●
+Blocks the kthread for the specified number of 
+seconds
+
+
+
+
+What if the spin lock holder is interrupted? 
+
+Interrupting a spin lock holder may cause several 
+problems: 
+o
+Spin lock holder is delayed, so is every thread spin waiting 
+for the spin lock 
+•
+Not a big problem if interrupt handlers are short 
+o
+Interrupt handler may access the data protected by the 
+spin-lock 
+•
+Should the interrupt handler use the lock? 
+•
+Can it be delayed trying to acquire a spin lock? 
+•
+What if the lock is already held by the thread it interrupted? 
+
+Solutions 
+
+If data is only accessed in interrupt context and is local to one 
+specific CPU we can use interrupt disabling to synchronize 
+o
+A pseudo-concurrency solution like in the 
+uniprocessor
+ case 
+
+If data is accessed from other CPUs we need additional 
+synchronization 
+o
+Spin locks 
+o
+Spin locks can not be acquired in interrupt context because this might 
+deadlock 
+
+Normal code (kernel context) must disable interrupts and 
+acquire spin lock 
+o
+interrupt context code need not acquire spin lock 
+o
+assumes data is not accessed by interrupt handlers on different CPUs, i.e., 
+interrupts are CPU-local and this is CPU-local data 
+
+.
+
+
+
+
+

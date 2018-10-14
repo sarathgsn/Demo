@@ -1,0 +1,108 @@
+GDB with stripped elf 
+
+$(gdb) info file 
+it gives the entry point address ,use this as a break point 
+(gdb) b *0x8048440
+(gdb) x/10i $pc
+
+
+Locating the entry point
+
+Debugging is still possible, but it is more complicated. First we need the memory address of the entry point:
+
+    (gdb) info file
+    Symbols from "a.out".
+    Local exec file:
+    `a.out', file type elf32-i386.
+    Entry point: 0x8048350
+
+With GDB we can add a breakpoint on a memory address:
+
+    (gdb) b *0x8048350
+    Breakpoint 1 at 0x8048350
+    (gdb) run
+    Starting program: a.out
+
+    Breakpoint 1, 0x08048350 in ?? ()
+
+Disassembling code
+
+We managed to add a breakpoint on the entry point of our binary (and we reached that breakpoint), but we are still having some troubles with our favorite commands:
+
+    (gdb) disas
+    No function contains program counter for selected frame.
+    (gdb) step
+    Cannot find bounds of current function
+
+As GDB does not know the bounds of the functions, it does not know which address range should be disassembled.
+
+Once again, we will need to use a command working at a lower level.
+We must use the examine (x) command on the address pointed by the Program Counter register, we ask a dump of the 14 next assembly instructions:
+
+    (gdb) x/14i $pc
+    => 0x8048350: xor %ebp,%ebp
+    0x8048352: pop %esi
+    0x8048353: mov %esp,%ecx
+    0x8048355: and $0xfffffff0,%esp
+    0x8048358: push %eax
+    0x8048359: push %esp
+    0x804835a: push %edx
+    0x804835b: push $0x80484e0
+    0x8048360: push $0x8048470
+    0x8048365: push %ecx
+    0x8048366: push %esi
+    0x8048367: push $0x8048440
+    0x804836c: call 0x8048330 <__libc_start_main@plt>
+    0x8048371: hlt
+
+Libc initialization
+
+By looking at the code, you might be asking yourself: "Where the hell are we??"
+The C runtime has to do some initialization before calling our own main function, this is handled by the initialization routine __libc_start_main (check its prototype here).
+
+Before calling this routine, arguments are pushed on the stack in reverse order (following the cdecl calling convention). The first argument of __libc_start_main is a pointer to our main function, so we now have the memory address corresponding to our code: 0x8048440. This is what we found with nm earlier!
+Let's add a breakpoint on this address, continue and disassemble the code:
+
+    (gdb) b *0x8048440
+    Breakpoint 2 at 0x8048440
+    (gdb) c
+    Continuing.
+
+    Breakpoint 2, 0x08048440 in ?? ()
+    (gdb) x/10i $pc
+    => 0x8048440: push %ebp
+    0x8048441: mov %esp,%ebp
+    0x8048443: and $0xfffffff0,%esp
+    0x8048446: sub $0x10,%esp
+    0x8048449: movl $0x15,(%esp)
+    0x8048450: call 0x8048410
+    0x8048455: xor %eax,%eax
+    0x8048457: leave
+    0x8048458: ret
+    0x8048459: nop
+
+This looks like our main function, the value 21 (0x15) is placed on the stack and a function (the address corresponds to fun) is called.
+Afterwards, the eax register is cleared because our main function returns 0.
+Additional commands
+
+To step to the next assembly instruction you can use the stepi command.
+You can use print and set directly on registers:
+
+    (gdb) print $eax
+    $1 = 1
+    (gdb) set $eax = 0x2a
+    (gdb) print $eax
+    $2 = 42
+
+You can also dump the value of all registers:
+
+    (gdb) info registers
+    eax 0x2a 42
+    ecx 0xffffd6e4 -10524
+    edx 0xffffd674 -10636
+    ebx 0xf7fb8ff4 -134508556
+    esp 0xffffd64c 0xffffd64c
+    ebp 0x0 0x0
+    esi 0x0 0
+    edi 0x0 0
+    eip 0x8048440 0x8048440 

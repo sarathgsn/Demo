@@ -1,0 +1,29 @@
+
+
+
+
+
+
+
+
+
+In some other operating systems the kernel provides additional functionality. For example the kernel may also provide memory allocation functionality, and device drivers may be part of the kernel as well. This is not the case for eCos. Memory allocation is handled by a separate package. Similary each device driver will typically be a separate package. Various packages are combined and configured using the eCos configuration technology to meet the requirements of the application
+
+
+
+
+
+
+Schedulers:
+1 Bit map scheduler : each thread will have only one priority so in bit map scheduler each bit represents each priority
+ The bitmap scheduler supports multiple priority levels but only one thread can exist at each priority level. This means that scheduling decisions are very simple and hence the scheduler is efficient. Preemption between priority levels isautomatic. Timeslicing within a given priority level is irrelevant since there can be only one thread at each priority level."
+
+
+
+
+
+
+2 Multilevel queue scheduler :The multi-level queue scheduler supports multiple priority levels and multiple threads at each priority level.
+Preemption between priority levels is automatic.
+
+Optionally the MLQ scheduler supports timeslicing, where the scheduler automatically switches from one runnable thread to another when some number of clock ticks have occurred. Timeslicing only comes into play when there are two runnable threads at the same priority and no higher priority runnable threads. If timeslicing is disabled then a thread will not be preempted by another thread of the same priority, and will continue running until either it explicitly yields the processor or until it blocks by, for example, waiting on a synchronization primitive. The configuration options CYGSEM_KERNEL_SCHED_TIMESLICE and CYGNUM_KERNEL_SCHED_TIMESLICE_TICKS control timeslicing

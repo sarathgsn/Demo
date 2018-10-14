@@ -1,0 +1,28 @@
+a C cross-reference generator
+    cflow, cxref, calls, cscope, xscope, or ixfw 
+a C beautifier/pretty-printer
+    cb, indent, GNU indent, or vgrind 
+a revision control or configuration management tool
+    CVS, RCS, or SCCS 
+a C source obfuscator (shrouder)
+    obfus, shroud, or opqcp 
+a ``make'' dependency generator
+    makedepend, or try cc -M or cpp -M 
+tools to compute code metrics
+    ccount, Metre, lcount, or csize; there is also a package sold by McCabe and Associates 
+a C lines-of-source counter
+    this can be done very crudely with the standard Unix utility wc, and somewhat better with grep -c ";" 
+a C declaration aid (cdecl)
+    check volume 14 of comp.sources.unix (see question 18.16) and K&R2 
+a prototype generator
+    see question 11.31 
+a tool to track down malloc problems
+    see question 18.2 
+a ``selective'' C preprocessor
+    see question 10.18 
+language translation tools
+    see questions 11.31 and 20.26 
+C verifiers (lint)
+    see question 18.7 
+a C compiler!
+    see question 18.3 

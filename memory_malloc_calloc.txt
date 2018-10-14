@@ -1,0 +1,53 @@
+FREE()::
+Frees the memory space referenced by p, which must have been returned by a previous call to malloc(), calloc(), or realloc(). 
+▪
+If free(p)has already been called before, undefined behavior occurs. 
+▪If pis NULL, no operation is performed.
+
+REALLOC::
+
+realloc(void *p, size_t size);
+▪
+Changes the size of the memory block pointed to by pto size bytes. 
+▪
+The contents are unchanged to the minimum of the old and new sizes. 
+▪
+Newly allocated memory is uninitialized. 5
+▪
+Newly allocated memory is uninitialized. 
+▪
+If pis NULL, the call is equivalent to malloc(size). 
+▪
+if size is equal to zero, the call is equivalent to free(p). 
+▪
+Unless pis NULL, it must have been returned by an earlier call to malloc(), calloc(), or realloc()
+
+
+the 
+realloc()function deallocates the old object and returns a pointer to a new object of a specified size. 
+If memory for the new object cannot be allocated, the realloc()function does not deallocate the 48the realloc()function does not deallocate the old object and its value is unchanged. 
+If the realloc()function returns a null pointer, failing to free the original memory will result in a memory leak. 
+
+
+ALLOCA:
+
+
+
+Allocates memory in the stack frame of the caller. 
+This memory is automatically freed when the 
+function that called 
+alloca()
+returns
+
+
+
+
+
+
+
+
+
+
+
+
+

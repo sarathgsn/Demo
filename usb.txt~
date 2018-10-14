@@ -1,0 +1,92 @@
+     USB host controller identifies usb device connect/disconnect on the port. It acts as a interface between hardware and host controller software. USB Host controller variants available according to speeds of USB devices. Open Host Controller Interface(OHCI) and Universal Host Controller Interface(UHCI) supports USB speed 1.1(full and low speeds). Enhanced Host Controller Interface(EHCI) supports high speed USB 2.0 and also full and low speed devices. Extensible Host Controller Interface(xHCI) supports USB 3.x speeds. xHCI is designed to support all USB speeds.
+    USB core queries about usb devices and its supported features. It is called as Enumeration of USB device. USB core acts as interface between USB class driver and host controller. USB core identifies the class of device and invokes class driver functionality accordingly.
+    USB Class driver handles data flow between usb device and application that uses usb device. For example, printer class driver handles USB printer devices only. Mass-storage class handles data flow for USB Storage devices only. Example class drivers are HID, CDC, Mass storage, Printer, UVC, UAC etc.
+
+
+
+Your desktop/laptop/palmtop etc has a host controller which directly interfaces to USB devices; common types are UHCI, OHCI and EHCI. The drivers for these various types of controllers live in drivers/usb/host. These controllers are similar but different, so to minimise code duplication Linux has a Host Controller Driver framework (drivers/usb/core/hcd.c) which abstracts most of the common operations from the host controller driver.
+
+The HCD layer does this by keeping a struct usb_hcd (drivers/usb/core/hcd.h) with all common information in it for a host controller. Each of host controller drivers fills out a struct hc_driver for its hardware dependent operations, as per below (taken from the UHCI driver)
+
+
+Device - Represent the devices connected to the USB bus.
+Example: USB speaker with volume control buttons.
+Configurations - Represent the state of the device.
+Examples: Active, Standby, Initialization
+Interfaces - Logical devices.
+Examples: speaker, volume control buttons.
+Endpoints - Unidirectional communication pipes.
+Either IN (device to computer) or OUT (computer to device).
+
+
+Control endpoints:
+
+Used to configure the device, get information about it, send commands to it, retrieve status information.
+Simple, small data transfers.
+Every device has a control endpoint (endpoint 0),
+used to configure the device at insertion time.
+The USB protocol guarantees that the corresponding data transfers will always have enough (reserved) bandwidth.
+
+
+Interrupt endpoints:
+Transfer small amounts of data at a fixed rate
+each time the hosts asks the device for data.
+Guaranteed, reserved bandwidth.
+For devices requiring guaranteed response time,
+such as USB mice and keyboards.
+Note: different than hardware interrupts.
+Require constant polling from the host.
+
+
+Bulk endpoints;::
+
+Large sporadic data transfersLarge sporadic data transfers
+using all remaining available bandwidth.
+No guarantee on bandwidth or latency.
+Guarantee that no data is lost.
+Typically used for printers, storage or network devices.
+using all remaining available bandwidth.
+No guarantee on bandwidth or latency.
+Guarantee that no data is lost.
+Typically used for printers, storage or network devices.
+
+
+Alternate settings: each USB interface may have different parameter settings. Example: different bandwidth settings for an audio interface. The initial state is in the first setting, (number 0). 
+Alternate settings are often used to control the use of periodic endpoints, such as by having different endpoints use different amounts of reserved USB bandwidth. All standards-compliant USB devices that use isochronous endpoints will use them in non-default settings.
+
+
+
+
+
+
+
+
+
+USB-Standard Types
+
+In <linux/usb/ch9.h> you will find the USB data types defined in chapter 9 of the USB specification. These data types are used throughout USB, and in APIs including this host side API, gadget APIs, and usbfs.
+
+in fact, the device handle is not available directly in a driver; rather, the per-interface handles (pointers to struct usb_interface) are available, as USB drivers are written for device interfaces rather than the device as a whole.
+
+
+
+Recall that the probe and disconnect callbacks, which are invoked by the USB core for every interface of the registered device, have the corresponding interface handle as their first parameter. Refer to the prototypes below:
+
+
+
+The Linux USB implementation uses a USB request block (URB) as “data carrier” to communicate with USB devices. URBs are like data messages that are sent asynchronously from and to endpoints. Remember that the USB standard includes four types of endpoints. Likewise, four different types of URBs exist, namely control, interrupt, bulk, and isochronous URBs. Once an URB has been allocated and initialized by the driver, it is be submitted to the USB core which forwards it to the device. If the URB was successfully delivered to the USB core, a completion handler is executed. Then the USB core returns control to the device driver.
+
+
+
+A hub driver for the root hub (and physical hubs) and a helper kernel thread khubd that monitors all ports connected to the hub. Detecting port status changes and configuring hotplugged devices is time-consuming and is best accomplished using a helper thread for reasons you learned in Chapter 3, "Kernel Facilities." 
+
+The khubd thread is asleep by default. The hub driver wakes khubd whenever it detects a status change on a USB port connected to it.
+
+
+For end-to-end operation, the USB subsystem calls on various other kernel layers for assistance. To support USB mass storage devices, for example, the USB subsystem works in tandem with SCSI drivers
+
+
+
+The hub driver is the component in the Linux-USB subsystem responsible for enumeration.
+
+

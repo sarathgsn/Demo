@@ -1,0 +1,31 @@
+$ echo $SHELL
+
+variable ="Hello"
+echo $variable
+
+#!/bin/sh
+echo "what is your name?"
+read name
+echo "How do you do, $name?"
+read remark
+echo "I am $remark too!"
+
+
+Virtual terminal:
+Linux is a multi-user system, which allows many users to work on it simultaneously. So what if different users need to work on the same system at a time? How do you do that? This is where we need the virtual terminals, let us learn about them. 
+Virtual Terminals enable a number of users to work on different programs at the same time on the same computer. 
+Press Ctrl+Alt+F1
+Ctrl + Alt + F (1 to 6) key
+
+Home or Ctrl + a 	Move the cursor to the start of the current line
+End or Ctrl + e 	Move the cursor to the end of the current line
+Tab 	Autocomplete commands
+Ctrl + u 	Erase the current line
+Ctrl + w 	Delete the word before the cursor
+Ctrl + k 	Delete the line from the cursor position to the end
+reset 	Reset the terminal
+history 	List of commands executed by the user
+Arrow up 	Scroll up in history and enter to execute
+Arrow down 	Scroll down in history and enter to execute
+Ctrl + d 	Logout from the terminal
+Ctrl + Alt + Del 	Reboot the system

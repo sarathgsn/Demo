@@ -1,0 +1,497 @@
+ comma(,) operator returns the value which at the right hand side of , . if statement become if(0) 
+
+in SWITCH Statement we have to give the space 
+  
+case1: print
+case2: print it will not print anything , 
+
+case 1:
+case 2:
+
+
+
+void main(){
+	int a=2;
+	switch(a)
+	{
+		case4: printf("A");
+		break;
+		case3: printf("B");
+		case2: printf("C");
+		case1: printf("D");
+		break;
+		default: printf("E");
+	}
+}
+
+
+answer is E
+
+macro::
+
+#include <stdio.h>
+#if X == 3
+    #define Y 3
+#else
+    #define Y 5
+#endif
+ 
+int main()
+{
+    printf("%d", Y);
+    return 0;
+}
+
+
+
+
+
+
+
+n the first look, the output seems to be compile-time error because macro X has not been defined. In C, if a macro is not defined, the pre-processor assigns 0 to it by default. Hence, the control goes to the conditional else part and 5 is printed. See the next question for better understanding.
+
+
+function pointers ::
+
+int (*ptrFunc) ();
+
+Here, ptrFunc is a pointer to a function that takes no arguments and returns an integer. DO NOT forget to put in the parenthesis, otherwise the compiler will assume that ptrFunc is a normal function name, which takes nothing and returns a pointer to an integer.
+
+#include<stdio.h>
+int func(int, int);
+int main(void)
+{
+    int result1,result2;
+    /* declaring a pointer to a function which takes
+       two int arguments and returns an integer as result */
+    int (*ptrFunc)(int,int);
+ 
+    /* assigning ptrFunc to func's address */                     
+    ptrFunc=func;
+ 
+    /* calling func() through explicit dereference */
+    result1 = (*ptrFunc)(10,20);
+ 
+    /* calling func() through implicit dereference */         
+    result2 = ptrFunc(10,20);               
+    printf("result1 = %d result2 = %d\n",result1,result2);
+    return 0;
+}
+ 
+int func(int x, int y)
+{
+    return x+y;
+}
+
+
+
+call back::
+callback is nothing but passing the function pointer to the code from where you want your handler/callback function to be invoked.
+
+The first step is to register the callback function, which is just passing a function pointer as an argument to some other function (e.g., register_callback) where the callback function needs to be called. 
+2) Unlike normal pointers, we do not allocate de-allocate memory using function pointers.
+
+
+VALGRIND::
+
+
+
+malloc and calloc::
+
+
+malloc () function returns null pointer if it couldn’t able to allocate requested amount of memory.
+
+
+    calloc () function is also like malloc () function. But calloc () initializes the allocated memory to zero. But, malloc() doesn’t.
+
+
+strcpy ::
+while ((*dest++ = *src++) != '\0');
+
+STATIC::
+1.C
+static int x = 10;
+2.c
+static int x = 10;
+
+gcc 1.c 2.c : no  errpr
+
+
+
+structure padding::
+
+Architecture of a computeTo make use of this advantage of processor, data are always aligned as 4 bytes package which leads to insert empty addresses between other member’s address.r processor is such a way that it can read 1 word (4 byte in 32 bit processor) from memory at a time.
+
+
+
+
+
+
+ the processor will recognize the data type based on instruction (e.g. LDRB on ARM processor). Depending on the bank it is stored, the processor shifts the byte onto least significant data lines.
+It depends on processor architecture. If the access is misaligned, the processor automatically issues sufficient memory read cycles and packs the data properly onto the data bus. The penalty is on performance. Where as few processors will not have last two address lines, which means there is no-way to access odd byte boundary. Every data access must be aligned (4 bytes) properly. A misaligned access is critical exception on such processors. If the exception is ignored, read data will be incorrect and hence the results.
+
+
+
+
+
+
+
+
+
+
+DATA TYPES:::
+Signed means : Highest bit represets the sign.
+ex:
+	 signed char 8 bits
+	00000000
+	0111 1111 == 127
+	1111 1111 == -127
+	1000 0000 == -128The value returned by the 
+
+
+SIZEOF();
+
+sizeof()
+ operator is only evaluated at 
+compile-time, not at runtime.
+Unsigned means : Highest bis is aldo represents the number 
+ex:
+        1111 1111 = 256
+	0111 1111 = 127
+
+
+
+C specifies almost no run
+-
+time error checking. For example, no 
+check is performed to ensure that array boundaries are not overrun. These types of checks are the 
+responsibility of the programmer.
+
+
+
+C is special in that it allows the direct manipulation of bits, bytes, words, and pointers. This makes it 
+well suited for system
+-
+level programming, where these operations are common.
+
+
+
+
+When you call a library function, the C compiler ''remembers" its name. Later, the linker combines 
+the code you wrote with the object code already found in the standard library. This process is called 
+linking
+. Some compilers have their own linker, while others use the standard linker supplied by your 
+operating system
+
+
+
+The functions in the library are in 
+relocatable
+ format. This means that the memory addresses for the 
+various machine
+-
+code instructions have not been absolutely defined
+—
+only offset information has 
+been kept. When your program links with the functions in the standard library, these memory offsets 
+are used to create the actual addresses used. Several technical manuals and books explain this 
+process in more
+ 
+
+Variables of 
+type 
+char
+ are generally used to hold values defined by the ASCII character set. Values outside that 
+range may be handled differently by different compilers.
+
+
+
+
+MODIFIERS:
+
+signed
+unsigned
+long
+short
+
+
+
+
+C 
+defines two kinds of identifiers: external and internal. An external identifier will be involved in an 
+external link process. These identifiers, called 
+external names
+, include function names and global 
+variable names that are shared between source files. If the identifier is not used in an external link 
+process, then it is internal. This type of identifier is called an 
+internal name
+ and includes the names 
+of local variables, for example. In C89, at least the first 6 characters of an external identifier and at 
+least the first 31 characters of an internal identifier will be significant. C99 has increased these 
+values. In C99, an external identifier has at least 31 significant characters, and an internal identifier 
+has at least 63 significant characters. As a point of interest, in C++, at least the first 1,024 characters 
+of an identifier are significant. These differences may be important if you are converting a program 
+from C89 to C99, or from C to C++.
+
+
+
+Global variables are helpful when many functions in your program use the same data. You 
+should avoid using unnecessary global variables, however. They take up memory the entire time 
+your program is executing, not just when they are needed.
+
+
+
+In addition, using a global where a local 
+variable will do makes a function less general because it relies on something that must be defined 
+outside itself. Finally, using a large number of global variables can lead to program errors because 
+of unknown and unwanted side effects. A major problem in developing large programs is the 
+accidental changing of a variable's value because it was used elsewhere in the program. This can 
+happen in C if you use too many global variables in your programs
+
+
+
+
+
+
+
+Function scope applies only to labels. A label is 
+used as the target of a 
+goto
+ statement, and that label must be 
+within the same function as the 
+goto
+
+
+
+
+C defines type qualifiers that control how variables may be accessed or modified. 
+TYPE QUALIFIERS::::
+
+C89: const and volatile
+c99 : restrict
+
+
+
+
+VOLATILE
+
+For example, a global variable's address may be passed to the operating 
+system's clock routine and used to hold the system time. In this situation, the contents of the variable 
+are altered without any explicit assignment statements in the program. This is important because 
+most C compilers automatically optimize certain expressions by assuming that a variable's content is 
+unchanging if it does not occur on the left side of an assignment statement; thus, it might not be 
+reexamined each time it is referenced. Also, some compilers change the order of evaluation of an 
+expression during the compilation process. The 
+volatile
+ modifier prevents these changes.
+
+
+
+
+
+
+
+
+You can use const and volatile together.
+For example, if 0x30 is assumed to be the value of a port 
+that is changed by external conditions only, the following declaration would prevent any possibility 
+of accidental side effects:
+const volatile char *port = (const volatile char *)  0x30
+
+
+
+
+
+
+
+
+ C defines three categories of 
+linkage: external, internal, and none. In general, functions and global variables have external 
+linkage. This means they are available to all files that constitute a program. File scope objects 
+declared as 
+static
+ (described in the next section) have internal linkage. These are known only within 
+the file in which they are declared. Local variables have no linkage and are therefore known only 
+within their own block.
+
+
+
+
+
+
+
+
+
+The goto statement requires a label for operation. (A label is a valid identifier followed by a colon.) 
+Furthermore, the label must be in the same function as the goto that uses it—you cannot jump between functions.
+
+
+
+
+
+A break causes an exit from only the innermost loop
+
+
+
+A class of U indicates an undefined reference, one of the "blanks" mentioned previously. For this object, there are two: "fn_a" and "z_global". (Some versions of nm may also print out a section, which will be *UND* or UNDEF in this case)
+A class of t or T indicates where code is defined; the different classes indicate whether the function is local to this file (t) or not (T)—i.e. whether the function was originally declared with static. Again, some systems may also show a section, something like .text
+A class of d or D indicates an initialized global variable, and again the particular class indicates whether the variable is local (d) or not (D). If there's a section, it will be something like .data
+For an uninitialized global variable, we get b if it's static/local, and B or C when it's not. The section in this case will probably be something like .bss or *COM*
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GCC –gc-sections to remove unused code and data
+
+Sometimes it is required to reduce code size. Code size may be higher due to unused functions and data which are declared but not used. Sometimes it is not easier/possible to modify code and remove that.
+
+There are GCC options which can help here:
+
+    -ffunction-sections
+    -fdata-sections
+    –gc-sections
+    –print-gc-sections
+
+First two flags are passed at compilation stage. These flags tells compiler to create separate sections for each functions and data. Third flag is passed to linker which checks each section and remove sections which are not used.
+
+-ffunction-sections
+
+By default every functions are combined into single .text function but when we use “-ffunction-sections” flag, compiler creates different text section for each function (e.g. .text.func1, .text.func2, etc)
+
+-fdata-sections
+
+By default variables belongs .data are combined into single .data function but when we use “-fdata-sections” flag, compiler creates different .data section for each data (e.g. .data.var1, .data.var2, etc)
+
+–gc-sections
+
+This tells linker to remove unused sections.
+
+–print-gc-sections
+
+This flag is useful for debugging and identifying removed sections. This prints sections which are removed.
+Example:
+
+Consider below C example:
+
+#include
+
+int globalval = 5;
+
+int main()
+{
+printf (“Hello World!\n”);
+return 0;
+}
+
+int func(void)
+{
+printf(“I am function\n”);
+return 0;
+}
+Case 1: Without GCC flags
+
+When we compile program without above flags, compiler includes all functions and data even if those are not used.
+
+~$ gcc -c test.c -o test.o
+~$ gcc -o test.bin test.o
+
+Size of program:
+
+~$ size test.bin
+   text   data    bss    dec    hex filename
+   1253    556      4   1813    715 test.bin
+
+obj-dump snippet
+
+~$ objdump -x test.o
+ - - - - - -
+SYMBOL TABLE:
+0000000000000000 l    df *ABS*	0000000000000000 test.c
+0000000000000000 l    d  .text	0000000000000000 .text
+0000000000000000 l    d  .data	0000000000000000 .data
+0000000000000000 l    d  .bss	0000000000000000 .bss
+0000000000000000 l    d  .rodata	0000000000000000 .rodata
+0000000000000000 l    d  .note.GNU-stack	0000000000000000 .note.GNU-stack
+0000000000000000 l    d  .eh_frame	0000000000000000 .eh_frame
+0000000000000000 l    d  .comment	0000000000000000 .comment
+0000000000000000 g     O .data	0000000000000004 globalval
+0000000000000000 g     F .text	0000000000000015 main
+0000000000000000         *UND*	0000000000000000 puts
+0000000000000015 g     F .text	0000000000000015 func
+ - - - - - -
+
+Case 2: With GCC flags
+
+When we compile program with -ffunction-sections and -fdata-sections flags, compiler creates separate sections for each function and data. When we provide –gc-sections flag while linking, linker removes all unused sections.
+
+~$ gcc -fdata-sections -ffunction-sections -c test.c -o test.o
+~$ gcc -Wl,--gc-sections -Wl,--print-gc-sections -o test.bin test.o
+/usr/bin/ld: Removing unused section '.rodata.cst4' in file '/usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crt1.o'
+/usr/bin/ld: Removing unused section '.data' in file '/usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crt1.o'
+/usr/bin/ld: Removing unused section '.data' in file '/usr/lib/gcc/x86_64-linux-gnu/5/crtbegin.o'
+/usr/bin/ld: Removing unused section '.data.globalval' in file 'section.o'
+/usr/bin/ld: Removing unused section '.text.func' in file 'section.o'
+
+Size of program:
+
+~$ size test.bin
+   text   data    bss    dec    hex filename
+   1193    536      8   1737    6c9 test.bin
+
+obj-dump snippet
+
+~$ objdump -x test.o
+ - - - - - -
+SYMBOL TABLE:
+0000000000000000 l    df *ABS*	0000000000000000 test.c
+0000000000000000 l    d  .text	0000000000000000 .text
+0000000000000000 l    d  .data	0000000000000000 .data
+0000000000000000 l    d  .bss	0000000000000000 .bss
+0000000000000000 l    d  .data.globalval	0000000000000000 .data.globalval
+0000000000000000 l    d  .rodata	0000000000000000 .rodata
+0000000000000000 l    d  .text.main	0000000000000000 .text.main
+0000000000000000 l    d  .text.func	0000000000000000 .text.func
+0000000000000000 l    d  .note.GNU-stack	0000000000000000 .note.GNU-stack
+0000000000000000 l    d  .eh_frame	0000000000000000 .eh_frame
+0000000000000000 l    d  .comment	0000000000000000 .comment
+0000000000000000 g     O .data.globalval	0000000000000004 globalval
+0000000000000000 g     F .text.main	0000000000000015 main
+0000000000000000         *UND*	0000000000000000 puts
+0000000000000000 g     F .text.func	0000000000000015 func
+ - - - - - -
+
+Conclusion
+
+As it can be seen from example, that in second case, different sections for each functions (.text.main and .text.func) and data (.data.globalval) are created. While linking, these are removed ,as they are not used.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

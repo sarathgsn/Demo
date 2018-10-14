@@ -1,0 +1,1 @@
+cmd_/home/sarath/sarath/kernel/sample.ko := ld -r -m elf_x86_64 -T ./scripts/module-common.lds --build-id  -o /home/sarath/sarath/kernel/sample.ko /home/sarath/sarath/kernel/sample.o /home/sarath/sarath/kernel/sample.mod.o

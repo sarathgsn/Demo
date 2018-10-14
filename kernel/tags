@@ -1,0 +1,18 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+__this_module	module.mod.c	/^__visible struct module __this_module$/;"	v	typeref:struct:module
+__used	module.mod.c	/^__used$/;"	v	file:
+__used	module.mod.c	/^__used$/;"	v	typeref:struct:____versions	file:
+hello_exit	hello_printk.c	/^module_exit(hello_exit);$/;"	v
+hello_exit	hello_printk.c	/^static void hello_exit(void)$/;"	f	file:
+hello_exit	module.c	/^module_exit(hello_exit);$/;"	v
+hello_exit	module.c	/^static void hello_exit(void)$/;"	f	file:
+hello_init	hello_printk.c	/^module_init(hello_init);$/;"	v
+hello_init	hello_printk.c	/^static int hello_init(void)$/;"	f	file:
+hello_init	module.c	/^module_init(hello_init);$/;"	v
+hello_init	module.c	/^static int hello_init(void)$/;"	f	file:
+obj-m	Makefile	/^obj-m:=module.o$/;"	m

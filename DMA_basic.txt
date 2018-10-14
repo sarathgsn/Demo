@@ -1,0 +1,113 @@
+DMA ::::
+	1 LDMA(Linked)
+	2 EDMA(enhanced)
+
+
+DMA controllers depended on the fact that the bus had separate lines to assert for memory read/write, and I/O read/write.
+
+
+The PCI bus, however, does not have separate lines for memory read/write and I/O read/write. 
+
+
+
+I/O Methods I/O – Transfer of data between memory of the system and the I/O device Most devices operate asynchronously from the CPU Most methods involve CPU in performing actual transfer  
+1. Direct I/O 
+2. Polled/Programmed I/O 
+3. Interrupt Driven I/O 
+4. Direct Memory Access 
+
+1:::::::Direct I/O Only suitable for some I/O devices Simple devices – LEDs, simple switches etc. Device always ready to transfer data No status checking required
+
+2:::::::::::Interrupt Driven I/O Device has an output signal that is connected to a special signal of the CPU The device asserts the signal when it is ready to transfer data (Interrupt request) The CPU may ignore the request – the interrupt is said to be masked) Some CPUs have a special interrupt that is non- maskable. For very important interrupts such as alarms, power failure etc. 
+
+
+  Enabled interrupts checked after each machine instruction.
+  Interrupt requests are usually prioritised
+  Most CPUs use an interrupt vectoring system
+  Each possible interrupt source is allocated a particular vector number/address
+  The CPU vectors to the address in the table and continues executing instructions. 
+  The CPU returns to executing the interrupted program on encountering the special machine instruction Return from Interrupt 
+
+Interrupt Processing Potential problems::
+
+  Re-entrancy of functions  
+  Sharing of variables – mutual exclusion Solutions 
+  Keep interrupt processing code to a minimum 
+  Do not call other functions in the ISR 
+  For shared variables use a data type that is accessed with an indivisible instruction e.g. single bit 
+  Disable interrupts during shared variable access. 
+
+
+1.Specify starting address of source data in memory.
+2.Set length of data to be transferred.
+3.Specify address of destination region (where you want to transfer the data to).
+4.Write a done handler to specify what need to be done once the transfer is complete.
+5.Write a fault handler in case the transfer fails to complete (a default handler is available by the driver).
+6.Send these data to the DMA instruction execution engine and start the transfer.
+
+
+
+
+
+ Now imagine that the I/O device wants to store a lot of data to memory. Perhaps you have just taken some pictures on a digital video camera, and want to store this information.
+
+One way to do this is to alert the CPU that the I/O device wants to store data to memory. These are the steps that might be taken.
+
+    CPU sends signal to I/O device to put data on data bus.
+    I/O device places data on data bus, and signals it has done so.
+    CPU reads in the data into a register, and signals the I/O device that it has finished reading the data.
+    CPU signals memory that it is ready to write data to memory.
+    CPU places address and data on data bus.
+    Memory writes data from data to some memory location.
+    Memory signals CPU it has written data. 
+
+Thus the data flows from the I/O device to the CPU, and from the CPU to memory.
+DMA
+It should seem obvious that there is a quicker way to put the data in memory. After all, these are lecture notes on "Direct Memory Access", so the idea is to access memory directly, and avoid the CPU as the middle man.
+
+After all, how can memory who is sending signals to it? How does it know that the CPU sends signals, instead of the device itself.
+
+If the I/O device generates all the signals that the CPU does, then the I/O device can bypass the step where the data transfers to the CPU, thus, potentially doubling the speed.
+Problems
+There are some potential problems. Before we introduced I/O devices, the CPU was in charge of the bus. It was in control of when the bus was being accessed.
+
+With I/O devices, both the CPU and the I/O device may be contending to use the address and data bus, so there needs to be some way of arbitrarting (deciding) who gets the bus at which time.
+
+Furthermore, if there are more than one I/O devices trying to access the bus, we may have to decide which I/O device gets control.
+
+One potential solution to the problem is to have a hardware device that is a bus arbitrator, which decides which device gets the bus, and helps coordinate who sends what signals to the memory. 
+
+
+
+
+Here is an example of the steps that occur to cause a DMA transfer. In this example, the floppy disk controller (FDC) has just read a byte from a diskette and wants the DMA to place it in memory at location 0x00123456. The process begins by the FDC asserting the DRQ2 signal to alert the DMA controller.
+
+The DMA controller will note that the DRQ2 signal is asserted. The DMA controller will then make sure that DMA channel 2 has been programmed and is enabled. The DMA controller also makes sure that none of the other DMA channels are active or have a higher priority. Once these checks are complete, the DMA asks the CPU to release the bus so that the DMA may use the bus. The DMA requests the bus by asserting the HRQ signal which goes to the CPU.
+
+The CPU detects the HRQ signal, and will complete executing the current instruction. Once the processor has reached a state where it can release the bus, it will. Now all of the signals normally generated by the CPU (-MEMR, -MEMW, -IOR, -IOW and a few others) are placed in a tri-stated condition (neither high or low) and then the CPU asserts the HLDA signal which tells the DMA controller that it is now in charge of the bus.
+
+Depending on the processor, the CPU may be able to execute a few additional instructions now that it no longer has the bus, but the CPU will eventually have to wait when it reaches an instruction that must read something from memory that is not in the internal processor cache or pipeline.
+
+Now that the DMA ``is in charge'', the DMA activates its -MEMR, -MEMW, -IOR, -IOW output signals, and the address outputs from the DMA are set to 0x3456, which will be used to direct the byte that is about to transferred to a specific memory location.
+
+The DMA will then let the device that requested the DMA transfer know that the transfer is commencing. This is done by asserting the -DACK signal, or in the case of the floppy disk controller, -DACK2 is asserted.
+
+The floppy disk controller is now responsible for placing the byte to be transferred on the bus Data lines. Unless the floppy controller needs more time to get the data byte on the bus (and if the peripheral needs more time it alerts the DMA via the READY signal), the DMA will wait one DMA clock, and then de-assert the -MEMW and -IOR signals so that the memory will latch and store the byte that was on the bus, and the FDC will know that the byte has been transferred.
+
+Since the DMA cycle only transfers a single byte at a time, the FDC now drops the DRQ2 signal, so that the DMA knows it is no longer needed. The DMA will de-assert the -DACK2 signal, so that the FDC knows it must stop placing data on the bus.
+
+The DMA will now check to see if any of the other DMA channels have any work to do. If none of the channels have their DRQ lines asserted, the DMA controller has completed its work and will now tri-state the -MEMR, -MEMW, -IOR, -IOW and address signals.
+
+Finally, the DMA will de-assert the HRQ signal. The CPU sees this, and de-asserts the HOLDA signal. Now the CPU activates its -MEMR, -MEMW, -IOR, -IOW and address lines, and it resumes executing instructions and accessing main memory and the peripherals.
+
+For a typical floppy disk sector, the above process is repeated 512 times, once for each byte. Each time a byte is transferred, the address register in the DMA is incremented and the counter that shows how many bytes are to be transferred is decremented.
+
+When the counter reaches zero, the DMA asserts the EOP signal, which indicates that the counter has reached zero and no more data will be transferred until the DMA controller is reprogrammed by the CPU. This event is also called the Terminal Count (TC). There is only one EOP signal, because only one DMA channel can be active at any instant.
+
+If a peripheral wants to generate an interrupt when the transfer of a buffer is complete, it can test for its -DACK signal and the EOP signal both being asserted at the same time. When that happens, it means the DMA will not transfer any more information for that peripheral without intervention by the CPU. The peripheral can then assert one of the interrupt signals to get the processors' attention. The DMA chip itself is not capable of generating an interrupt. The peripheral and its associated hardware is responsible for generating any interrupt that occurs.
+
+It is important to understand that although the CPU always releases the bus to the DMA when the DMA makes the request, this action is invisible to both applications and the operating systems, except for slight changes in the amount of time the processor takes to execute instructions when the DMA is active. Subsequently, the processor must poll the peripheral, poll the registers in the DMA chip, or receive an interrupt from the peripheral to know for certain when a DMA transfer has completed.
+
+
+
+

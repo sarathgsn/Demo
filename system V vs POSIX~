@@ -1,0 +1,7 @@
+One marked difference between the System V and POSIX semaphore implementations is that in System V you can control how much the semaphore count can be increased or decreased; whereas in POSIX, the semaphore count is increased and decreased by 1.
+
+Initialization and creation of semaphores is atomic (from the user's perspective) in POSIX semaphores.
+
+POSIX semaphores provide a mechanism for process-wide semaphores rather than system-wide semaphores. So, if a developer forgets to close the semaphore, on process exit the semaphore is cleaned up. In simple terms, POSIX semaphores provide a mechanism for non-persistent semaphores.
+
+the basic concepts are the same. One notable difference is that POSIX offers some notification features for message queues that Sys V does not. (See mq_notify().)

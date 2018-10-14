@@ -1,0 +1,21 @@
+ Char  devices  are  accessed  by  means  of  filesystem  nodes,  such  as /dev/tty1 and /dev/lp0
+ The only relevant difference between a char device and a regular  file  is  that  you  can  always  move  back  and  forth  in  the  regular  file, whereas most char devices are just data channels, which you can only access sequentially.
+
+Linux kernel supports inserting of modules (aka device drivers) in two ways:
+
+    Built-in kernel modules - When the kernel is booted up, the kernel automatically inserts this driver in to the kernel (it's more like it is already part of the kernel code).
+    Loadable kernel module (LKM) - A driver that is not automatically loaded by the kernel, the user can insert this module at run-time by insmod driver.ko or modprobe driver.ko
+
+The advantage the loadable modules have over the built-in modules is that you can load unload them on run-time. This is good if you are working on a module and you need to test it. Every time you test it and you need to make changes to it, you can easily unload it (rmmod driver.ko or modprobe -r driver.ko) and then after making changes, you can insert it back. But for the built-in modules if you need to make any changes in the module then you need to compile the whole kernel and then reboot the system with the new image of the kernel.
+
+Configuration:
+You can configure a module to be either of the two by editing the .config file in the root folder of your kernel source:
+
+DRIVER_1=y // y indicate a builtin module
+DRIVER_1=m //m inicates a loadable module
+
+Note: lsmod displays only the dynamically loaded modules not the built-in ones.
+
+EXPORT_SYMBOL_GPL will show the symbol only in GPL-licensed modules, and EXPORT_SYMBOL - in modules with any license.
+
+

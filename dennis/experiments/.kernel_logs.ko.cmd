@@ -1,0 +1,1 @@
+cmd_/home/sarath/sarath/dennis/experiments/kernel_logs.ko := ld -r -m elf_x86_64 -T ../scripts/module-common.lds --build-id  -o /home/sarath/sarath/dennis/experiments/kernel_logs.ko /home/sarath/sarath/dennis/experiments/kernel_logs.o /home/sarath/sarath/dennis/experiments/kernel_logs.mod.o ;  true

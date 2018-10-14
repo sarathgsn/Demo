@@ -1,0 +1,51 @@
+
+https://eli.thegreenplace.net/2013/07/09/library-order-in-static-linking
+
+
+
+
+
+the Unix world, the term dynamic linker is used to denote the component of the operating system which links dynamic libraries at runtime, whereas a loader on most other systems does both program loading and linking dynamic libraries.
+
+Because loading libraries under Unix-like systems is done by a separate component (ld.so most often), a dynamic linker is considered something distinct from the program loader. Compilers usually insert some stub code in the beginning of the executable to load ld.so, and ld.so would continue loading the rest of the dependent libraries before main is invoked. While program loading is done in kernelspace, linking dynamic libraries is usually done in userspace.
+
+This is unlike Windows, where both program loading and linking dynamic libraries is done in kernel mode.
+
+
+
+
+
+
+
+
+
+
+
+
+
+linking process of a shared library is carried out at run-time by therun-time linker (ld-linux.so) which itself is a shared library. The run-time linker is responsible
+for loading shared libraries and binding symbols to applications before the applications gain
+control from operating systems to execute. 
+
+
+
+
+The run-time linker can also be called during the
+process of an application's execution to load additional shared libraries by using dlopen
+function. Symbols provided by these shared libraries can be bound by using symbols dlsym
+function, and this process is often referred to as dynamic loading. Once a shared library is
+loaded in physical memory, it's functions and variables can be shared by all processes that
+reference it, therefore the amount of used physical memory can be reduced.
+
+Type of Loaders
+The  different  types  of  loaders  are,  absolute  loader,  bootstrap  loader,  relocating loader  (relative  loader),  and,  direct  linking  loader.  The  following  sections  discuss  the functions and design of all these types of loaders
+
+
+Absolute loading: This approach loads the executable file of a program into a same main memory location each time. But it has some disadvantages like a programmer must be aware of the assignment strategy for loading the modules to main memory.  In case, the program is to be modified involving some insertion and deletion in the program, then all the addresses of the program have to be altered.
+
+
+Relocatable loading: In this approach, the compiler or assembler does not produce actual main memory address. It produces the relative addresses.
+
+Dynamic Run-Time loading: In this approach, the absolute address for a program is generated when an instruction of an executable module is actually executed. It is very flexible, the loadable module/executable module can be loaded into any region of main memory. The executing program can be interrupted in between and can be swapped out to the disk and back to main memory this time at a different main memory address.
+
+

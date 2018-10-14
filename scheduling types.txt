@@ -1,0 +1,11 @@
+
+  1  First-come, first-served scheduling (FCFS) algorithm
+  2 Shortest Job First Scheduling (SJF) algorithm
+  3 Shortest Remaining time (SRT) algorithm
+  4  Non-preemptive priority Scheduling algorithm
+  5  Preemptive priority Scheduling algorithm
+  6  Round-Robin Scheduling algorithm
+  7  Highest Response Ratio Next (HRRN) algorithm
+  8  Multilevel Feedback Queue Scheduling algorithm
+  9  Multilevel Queue Scheduling algorithm
+

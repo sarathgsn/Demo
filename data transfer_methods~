@@ -1,0 +1,64 @@
+Peripheral Data Transfer Methods
+
+Polling
+
+Easiest method to implement
+Requires a large amount of core processing power
+Core polls peripheral control registers
+
+•Interrupts
+
+Configure using peripheral registers
+Core can process other routines while waiting for data I/O
+Peripherals trigger interrupt when data is ready to be transferred
+Requires additional code - interrupt service routines
+  
+
+Direct Memory Access (DMA) Controller
+
+Configured using DMA control registers
+Permits data transfers and I/O without core intervention
+DMA moves data to/from peripheral transmit/receive registers
+Uses dedicated address and data buses and internal memory partitioning
+
+CPU first initiates the transfer, then it does other operations while the transfer is in progress, and it finally receives an interrupt from the DMA controller when the operation is done.CPU first initiates the transfer, then it does other operations while the transfer is in progress, and it finally receives an interrupt from the DMA controller when the operation is done.
+
+
+
+To access the data from memory, we need two special registers one is known as Memory Data Register (MDR) and the second one is Memory Address Register (MAR).
+
+The size of the data bus indicate how many bit we can transfer at a time. Size of data bus is mainly specified by the data storage capacity of each location of memory module.
+
+
+I/O -mapped I/O:
+
+    In this scheme, the full range of addresses may be available for both.
+
+    The address refers to a memory location or an I/O device is specified with the help of a command line.
+
+    In general command line is used to identify a memory location or an I/O device.
+
+    if =1, it indicates that the address present in address bus is the address of an I/O device.
+
+    if =0, it indicates that the address present in address bus is the address of a memory location.
+
+    Since full range of address is available for both memory and I/O devices, so, with 16 address lines, the system may now support both 2 16 memory locations and 2 16 I/O addresses.
+
+
+memory mapped i /o:
+
+
+    There is a single address space for memory locations and I/O devices.
+
+    The processor treats the status and address register of the I/O modules as memory location.
+
+    For example, if the size of address bus of a processor is 16, then there are 216 combinations and all together 216 address locations can be addressed with these 16 address lines.
+
+    Out of these 216 address locations, some address locations can be used to address I/O devices and other locations are used to address memory locations.
+
+    Since I/O devices are included in the same memory address space, so the status and address registers of I/O modules are treated as memory location by the processor. Therefore, the same machine instructions are used to access both memory and I/O devices.
+
+
+
+
+

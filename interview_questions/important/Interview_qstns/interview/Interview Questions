@@ -1,0 +1,116 @@
+1) what is structure padding and why it is used , structure packing.
+2) linked list program to delete all same node from the list ( in a single traversing )
+3) struct and union diff
+4) size of struct and union
+5) const int a = 10;
+int main ( )
+ {
+ int *p = &a;
+*p = 5;
+ prf ( " %d", a);
+}
+b) int main ()
+ {
+ int a= 10 ;
+*p = &a;
+ (*p)++;
+prf ( "%d", a) ;
+}
+6) fork, vfork , exec system call + woking
+7) clone system call
+8) thread and process diffrence
+ 9) mutex and semaphore diff
+10) spin lock functionality
+11) bit rotate left and right
+ 12) memory management and struct of memory
+13) where typedef will be stored/ resolved
+14) about macro and inline function
+15) structure padding and packing and why nedded 16) storage classes and scope + lifetime
+ 17) static and dynamic library
+ 18) char a[]="robin"; //character array
+        char *p = "robin"; //null terminated
+        difference
+19) got and PLT working
+20) how the make file work exe : gcc -o main main.c
+ 21) gdb break and watch point diffrence
+22) what are things you can call through gdb ( file, line ...)
+23) sliding window protocol
+24) TCP is relible and IP is unrelible why and how ?
+25) why we need 2 times ( segmentation and fragmentation )
+26) why TCP ( reliable ) above IP ( unreliable ) proper block over broked block to sit
+ 27) handshaking
+28) prcess and thread diff
+ 29) int main ()
+{
+fork ();
+fork ();
+ fork ();
+pf (" hi\n");
+}
+ how many time it wil print hi and why ?
+Ans: power(2,n), n is number of porks;
+30) int main ( )
+{
+union a
+{
+ int a;
+ int b;
+}a;
+a.a = 10;
+ a.b = 5;
+ pf ( "%d%d\n", a.a, a.b );
+}
+31) diff between static and dynamic linking
+32) macro and inline function and when it will resolve and who will resolve?+ condition ( is evry time inline will be inline
+ 33) signal handler in the case of child ( when the signal wll be handled ) if parent recieve signal and then creted child and child executed first then when signal will be handled and who wll handle ?
+34) reverse linked list
+35) scopes and lifetime
+36) what is void, where used.
+37) whether static can be used inside structure, justify.
+38) memcpy and strcpy
+39) sizeof() operator or function or macro, justify.
+     If its operator whether operator returs?
+        // compile time operator.
+40) why typecasting at malloc.
+41) malloc vs calloc and what is realloc.
+42) whether malloc contiguos or linked list.
+43) all ipc explanation with system calls (pipes, msg q, shared mem, semapore, socket)
+44) socket program
+45) how open sytem call work( with file table, UFDT, IT)
+46) how read write system call work.
+47) array vs pointer
+48) array vs structure
+        structure padding, packing
+        indexing in array
+        array elements accessing for loop, struct directly
+49) Filesystem structure, Kernel architecture
+50) add 2 numbers without using + and bitwise op's. (a - (-b))
+51) abcd=>cdab is (abcd << 8 | abcd >>8) (bit rotation)
+52) Queue/ stack using linked list/array
+53) Sorting and Searching(important): binary search, linear search, bubble sort, selection sort, quick sort, merge sort, insertion sort , heap sort (For all If u know logic is enough.)
+54) difference b/w heap sort an insertion sort
+55) bit fields
+56) how to access 8 bits as bit by bit or all at once
+Answer:
+    union a{
+        char byte b;
+        struct bit {
+            char b0:1;
+            char b1:1;
+            char b2:1;
+            char b3:1;
+            char b4:1;
+            char b5:1;
+            char b6:1;
+            char b7:1;
+    };
+}
+
+
+
+
+
+
+
+
+ 

@@ -1,0 +1,25 @@
+https://eli.thegreenplace.net/archives/all
+https://eli.thegreenplace.net/2011/01/23/how-debuggers-work-part-1
+https://eli.thegreenplace.net/2012/08/13/how-statically-linked-programs-run-on-linux
+https://eli.thegreenplace.net/2012/08/13/how-statically-linked-programs-run-on-linux
+http://www.bravegnu.org/gnu-eprog/lds.html
+http://www.bravegnu.org/gnu-eprog/data-in-ram.html
+https://www.linuxjournal.com/article/1059
+http://www.bravegnu.org/gnu-eprog/linker.html
+https://code.org/
+https://community.arm.com/processors/b/blog/posts/writing-your-own-startup-code-for-cortex-m
+https://github.com/dwelch67/raspberrypi/tree/master/bssdata
+https://notes.shichao.io/
+https://onebitbug.me/2011/03/04/introducing-linux-kernel-symbols/
+http://www.iti.uni-stuttgart.de/~radetzki/Seminar06/08_report.pdf
+http://c-faq.com
+https://sploitfun.wordpress.com/2015/02/10/understanding-glibc-malloc/
+
+About OS 
+https://courses.cs.washington.edu/courses/cse410/99au/lectures/Lecture-09-29/sld001.htm
+http://www.esacademy.com/en/library/technical-articles-and-documents/miscellaneous/software-based-memory-testing.html (Memory testing);
+https://felix.abecassis.me/2012/08/gdb-debugging-stripped-binaries/(gdb with stripped binarries)
+http://www.it.uu.se/education/course/homepage/os/vt18/module-1/mips-coprocessor-0/ (mips co processor)
+https://www.ibm.com/support/knowledgecenter/en/SSVUN6_1.1.0/com.ibm.xlcpp11.zlinux.doc/language_ref/asm_example.html (ASM )
+
+http://docs.huihoo.com/ecos/latest/ref/kernel-overview.html (About ecos)

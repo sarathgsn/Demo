@@ -1,0 +1,8 @@
+
+
+    \b (backspace) Moves the active position to the previous position on the current line. If the active position is at the initial position of a line, the behavior of the display device is unspecified.
+
+    \n (new line) Moves the active position to the initial position of the next line.
+
+    \r (carriage return) Moves the active position to the initial position of the current line.
+

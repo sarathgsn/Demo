@@ -1,0 +1,54 @@
+memory leak :
+
+
+Reassignment
+
+	
+char *memoryArea = malloc(10);
+char *newArea = malloc(10);
+
+memoryArea = newArea;
+
+ the memory location to which memoryArea was pointing to earlier becomes an orphan, 
+
+It cannot be freed, as there is no reference to this location. This will result in a memory leak of 10 bytes.
+
+
+Freeing the parent block first
+
+Suppose there is a pointer memoryArea pointing to a memory location of 10 bytes. The third byte of this memory location further points to some other dynamically allocated memory location of 10 bytes, as shown in Figure 6.
+Figure 6. Dynamically allocated memory
+Dynamically allocated memory:
+
+
+
+If memoryArea is freed by making a call to free, then as a result the newArea pointer also will become invalid. The memory location to which newArea was pointing cannot be freed, as there is no pointer left pointing to that location. In other words, the memory location pointed by newArea becomes an orphan and results in memory leak. 
+
+Whenever freeing the structured element, which in turn contains the pointer to dynamically allocated memory location, first traverse to the child memory location (newArea in the example) and start freeing from there, traversing back to the parent node. 
+
+
+
+
+
+Memory overwrite :
+Memory overread:
+
+struct static variables::
+ 
+Coming to struct - A struct is a derived type. You define a variable of a particular declared struct type. This variable, say X, is referred to as one whole data item. The structure in turn can be local to a function (in which case it will be given memory on stack), it can be a global (in which case it will be in the BSS or data segment) or it can be allocated dynamically from heap.  Whatever the case, all its members are continuous in memory.
+So, it is possible to only make the whole structure with all its elements of static type, because it is not possible to separate one member out to the data segment by making it static.
+
+If it were possible to make one member as static, then that would defeat the purpose of a struct variable, with the static member always in data segment and the rest of the members elsewhere in memory with different life span.
+
+
+The #pragma preprocessor:::
+ directive allows each compiler to implement compiler-specific features that can be turned on and off with the #pragma statement. For instance, your compiler might support a feature called loop optimization. This feature can be invoked as a command-line option or as a #pragma directive. To implement this option using the #pragma directive, you would put the following line into your code:
+
+#pragma loop_opt(on)
+
+Conversely, you can turn off loop optimization by inserting the following line into your code:
+
+#pragma loop_opt(off)
+
+
+

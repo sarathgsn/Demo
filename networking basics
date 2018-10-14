@@ -1,0 +1,68 @@
+Switch -->> layer 2 
+router -> layer 3
+hub or repeater --> layer 1 
+bridge --> layer 2 
+
+Transport Segments 4
+Network Packets 3
+Data-link Frames 2
+Physical Bits 1 
+
+Hub::
+here are three things that switches do t
+hat hubs do not: 
+•
+Hardware address learning 
+•
+Intelligent forwarding of frames 
+•
+Loop avoidance 
+
+
+
+Layer-2 Forwarding Methods
+Switches support three 
+methods
+ of forwarding frames. Each method copies 
+all or part of the frame into memory, providing dif
+ferent levels of latency 
+and reliability. 
+Latency
+ is 
+delay
+ - less latency results in quicker forwarding. 
+The 
+Store-and-Forward 
+method copies the 
+entire
+ frame into memory, and 
+performs a Cycle Redundancy Check (CRC) to complete
+ly ensure the 
+integrity of the frame. However, this level of erro
+r-checking introduces the 
+highest latency of any of the switching methods. 
+The 
+Cut-Through (Real Time) 
+method copies only enough of a frame’s 
+header to determine its destination address. This i
+s generally the 
+first 6 bytes
+following the preamble. This method allows frames t
+o be transferred at 
+wire 
+speed
+, and has the least latency of any of the three met
+hods. No error 
+checking is attempted when using the cut-through me
+thod.
+The 
+Fragment-Free (Modified Cut-Through) 
+method copies only the 
+first 
+64 bytes
+ of a frame for error-checking purposes. Most colli
+sions or 
+corruption occur in the first 64 bytes of a frame. 
+Fragment-Free represents a 
+compromise between reliability (store-and-forward) 
+and speed (cut-through). 

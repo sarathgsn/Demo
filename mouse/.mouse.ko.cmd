@@ -1,0 +1,1 @@
+cmd_/home/sarath/sarath/mouse/mouse.ko := ld -r -m elf_x86_64 -T ../scripts/module-common.lds --build-id  -o /home/sarath/sarath/mouse/mouse.ko /home/sarath/sarath/mouse/mouse.o /home/sarath/sarath/mouse/mouse.mod.o ;  true

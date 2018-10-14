@@ -1,0 +1,120 @@
+Toolchain_1 
+
+1. Try to cross the boundary of memory associated for a process. 
+
+2. Change to MB 
+	a. 0x094260 
+	b. 0xbfde2010 
+	c. 0x08d48210 
+	d. 0x38000000 
+
+3. change in kb 
+	a. 0x1000 
+	b. 0xb4200 
+	c. 0xc4fe0 
+
+4. so you have given 
+	0x00 - 0x7f - RAM 
+	0x80 - 0xbf - ROM 
+	0xc0 - 0xff - i/o device 
+
+draw a address decoder logic for this 
+
+
+Toolchain_2 
+
+1. write a program with all the types of variables. 
+   - global initialised/uninitialised symbols 
+   - function/ file static symbols 
+   - constant symbols etc 
+
+& check using readelf to which section they belongs to. 
+
+
+******************************************************************** 
+Toolchain_2 
+
+
+1 Define a structure of 16MB in the main function you alocate allocate a memory 
+      using malloc, keep on allocating untill the mmalloc is fails once the malloc fails 
+	  come out of the while loop and calculate the total amount of memory allocated by the 
+	  while loop. 
+	 
+2. Implement your own ELF. download elf1.2 specification, you should have three files 
+	  myelf.h myelf.c myelf_functions.c. 
+	 
+	* in myelf.c we will have to only invoke functions and definitions should be in 
+	  myelf_functions.c --> elf_header_print ,section_header_print ,program_header_print, 
+	  relocation_table_print and symtab_print 
+	 
+	
+
+	* it is very simple read specification for everything we have header file and appropriatly 
+	  copy information from obejct file to header what we have defined here in c file 
+	  the types are not basic data types so equivalent data types will be defined here in 
+	  data representation so as per this data structure the information will be stored in the 
+	  object file 
+
+**************************************************************************** 
+
+
+Toolchain_3 
+
+1. List down the section in object file in which order they place in object file. 
+
+2. write down the order in which contents are placed in the object file. that means first should be 
+	   ELF header and program header like this. 
+
+3. i want you to read contents from 0x08048000 virtual addressess using fread. 
+           (obviously when we write a code it should be 1 page only) 
+ 		 * read code page in one file 
+  		 * read data page. in another file 
+
+
+
+******************************************************************************** 
+
+Toolchain_4 
+
+1. Can you search source code for all these things 
+		1. crt1.o 
+		2. crtbegin.o 
+		3. crtend.o 
+
+
+	* If we manually link those things with none of go option in sigle step. 
+
+	* so we will come to know what each of it is doing. 
+
+	 This is how our learning will improve or our understanding about the internal 
+  	things will improve. 
+
+ 	So we have _start defined here in crt1.o & it is linked with our application ds.o . 
+
+
+2. 	take all the object files of crt1.o,crti.o,crtbegin.o,crtend.o,crtn.o. Read their symbol table.U will 	find all the functions defined.List out all those functions.Do objdump on executable file. 
+        and see whether u find all those functions instructions. 
+
+
+********************************************************************************
+
+
+
+
+Library 
+
+
+1. Understand GOT. 
+
+2. Try to do experiment on .got.plt. Wheather it gives segmentation fault or not. 
+
+3. Try to find different ways of getting memory leaks. 
+
+4. Read documentation of malloc ( how it is internally working). 
+
+5. Implement free (function) as a macro so that it do the working of internal function free 
+   & also make that pointer points to NULL. 
+
+6. Change the core file size (Hint: use ulimit) 
+
+********************************************************************************

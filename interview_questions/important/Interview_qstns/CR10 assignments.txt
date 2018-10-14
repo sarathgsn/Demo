@@ -1,0 +1,89 @@
+------C------
+1. malloc using Macro
+2. calloc using Macro
+3. alloca using Macro
+4. Find location using Linked list
+5. Implementation of itob
+6. Take byte as an input give bit as an output
+7. Count the number of bits needed to be flipped to get the number Y
+8. Minimum Maximum of two number 
+9. Clear right most set bit 
+10. Set bits from pos1 to pos2 
+11.Toggle bit from pos1 to pos2
+12. Reverse order of bit
+13. Function to setbit(x,pn,y) that returns x with n bits that begins with at position p set to the rightmost n bits of y,leaving the other bits nuchanged
+14. Command line calculator
+15. Inserting comma between words in line
+16. Convert integer into string and string into integer
+17. Arrange the words in a file in Increasing and Alphabetical order
+18. Stack using Array
+19. Convert the particular bit position into decimal value
+20. Bitwise calculator
+21. Remove the common word's, and print the remaining word's and it presented line number's
+22. Write an application program to create a linked list and save the list in the file and another application to recreate the linked list using the information that stored in file
+23. Implement the PUTW() to put the one byte of binary data at a time
+24. Arranging the file content using Quick Sort algorithm
+25. Toggle the character from the input file
+
+
+------DS------
+
+1. Merge two single linear linked list
+2. Doubly Circular linked list
+3. Implementation QUEUE of STACKS
+4. Implementation STACK of QUEUES
+5. Implementation of Priority queue
+6. Implementation of Circular queue
+7. Implementation the BST Non-recursive
+
+------LINUX------
+
+Kernel Basics
+
+1. implementation of basic kernel module
+2. implementation of character device
+3. Kernel Configuration
+
+Memory Management
+
+1. Implementation of MAPS
+2. Implementation of Page Dump
+3. Implementation of Page Walk
+4. Understanding of mmap () function
+5. Writing data to monitor's memory.
+
+Task Management
+
+1. Understanding of fork ()
+2. Understanding of vfork ()
+3. Implementation of Shell program using fork () and exec ()
+4. Alarm Program using process
+5. Understanding of Thread
+6. Alarm Program using Thread
+7. Linked List program to implement asynchronous alarm
+8. Understanding of clone ()
+9. Understanding of signals
+10.Implementation of asynchronous shell program
+11.Implementation of asynchronous alarm program 
+
+IPC
+
+1. Understanding of Named and Unnamed Pipes
+2. Understanding of Message Queues
+3. Understanding of Shared Memory
+4. Understanding of Semaphores
+5. Understanding of Mutex 
+6. Understanding of Conditional Variables
+7. Synchronization of two processes that add data to a linked list    created in shared memory and two threads that delete nodes from the list
+
+
+------Networking------
+
+1.Iterative client-server socket using TCP (connection oriented)
+2.Concurent client-server socket using TCP (connection oriented)
+
+3.Iterative client-server socket using UDP (connection less)
+4.Concurent client-server socket using UDP (connection less)
+
+5.Implementation of RAW SOCKET
+

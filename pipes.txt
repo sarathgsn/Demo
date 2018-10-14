@@ -1,0 +1,31 @@
+unidirectional interprocess communication channel.
+pipe resides in the kernel and not on a physical filesystem
+ Pipes can be used to create a communication channel between related processes
+ A pipe is created using pipe(2), which creates a new pipe and returns two file descriptors.
+A  FIFO  (short for First In First Out) has a name within the filesystem (created using mkfifo(3)), and is opened using open.
+The  only  difference  between  pipes and FIFOs is the manner in which they are created and opened.  Once these tasks have been accomplished, I/O on pipes and FIFOs has exactly the same semantics.
+
+If the parent wants to receive data from the child, it should close fd1, and the child should close fd0. If the parent wants to send data to the child, it should close fd0, and the child should close fd1. Since descriptors are shared between the parent and child, we should always be sure to close the end of pipe we aren't concerned with. On a technical note, the EOF will never be returned if the unnecessary ends of the pipe are not explicitly closed. 
+
+ Named pipes ::
+1 exist as a device special file in the file system.
+mknod MYFIFO p
+        mkfifo a=rw MYFIFO
+
+Normally, blocking occurs on a FIFO. In other words, if the FIFO is opened for reading, the process will "block" until some other process opens it for writing. This action works vice-versa as well. If this behavior is undesirable, the O_NONBLOCK flag can be used in an open() call to disable the default blocking action. 
+
+ On a last note, pipes must have a reader and a writer. If a process tries to write to a pipe that has no reader, it will be sent the SIGPIPE signal from the kernel. This is imperative when more than two processes are involved in a pipeline. 
+
+
+
+
+
+
+
+message_queues:
+
+Named PIPE or FIFO : Only two processes (can be related or unrelated) can communicate. Data read from FIFO is first in first out manner.
+
+Message Queues: Any number of processes can read/write from/to the queue.  Data can be read selectively. (need not be in FIFO manner);
+
+Shared Memory:  Part of process's memory is shared to other processes. other processes can read or write into this shared memory area based on the permissions. Accessing Shared memory is faster than any other IPC mechanism as this does not involve any kernel level switching(Shared memory resides on user memory area).

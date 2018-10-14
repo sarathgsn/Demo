@@ -1,0 +1,21 @@
+SIGQUIT       3       Core    Quit from keyboard
+SIGILL        4       Core    Illegal Instruction
+SIGABRT       6       Core    Abort signal from abort(3)
+SIGFPE        8       Core    Floating point exception
+SIGSEGV      11       Core    Invalid memory reference
+
+
+
+To set location of core dumps in Centos 6 you can edit /etc/sysctl.conf. For example if you want core dumps in /var/crash:
+
+kernel.core_pattern = /var/crash/core-%e-%s-%u-%g-%p-%t
+
+Where variables are:
+
+    %e is the filename
+    %g is the gid the process was running under
+    %p is the pid of the process
+    %s is the signal that caused the dump
+    %t is the time the dump occurred
+    %u is the uid the process was running under
+

@@ -1,0 +1,199 @@
+Structure Padding Basics :
+
+Word length = 32 
+
+1)Structure Smaller Than a Word:
+	struct st{
+		char c;	
+	};
+==>size is 1 byte
+
+2)structure with no padding
+struct st{
+	char a;
+	char b;
+	short c;
+	long d;
+};
+
+==>Word aligned, size is 8bytes
+
+
+3)struct st{
+	char a;
+	short b;
+};
+
+==> Halfword aligned, size is 4 bytes
+
+
+
+QUESTIONS:
+
+1)
+struct tag{
+	short s:9;
+	int j:9;
+	char c;
+	short t:9;
+	short u:9;
+	char d;
+};
+size of the structure?
+
+2)
+struct st{
+	char c;
+	int :0;
+	char d;
+	short :9
+	char e;
+	char :0;
+};
+ size of structure?
+
+3)
+struct st1 {
+	int a;
+	
+	struct {
+		int c;
+	};
+}obj;
+
+sizeof obj?
+
+
+
+4)struct st1 {
+	int a;
+	
+	struct st2{
+		int c;
+	};
+}obj;
+
+sizeof obj?
+		
+5)struct st1 {
+	int a;
+	
+	struct {
+		int c;
+	}obj2;
+}obj;
+
+sizeof obj?
+						
+6)struct st{
+	char a;
+	static int b;
+};
+
+can we do this?if not why?
+
+
+8)
+struct st{
+	#include <stdio.h>
+	char a;
+	#include <string.h>
+	static int b;
+};
+can we do this?if not why?
+
+
+9)struct st{
+	#define MAX 50
+	char a;
+	
+	static int b;
+};
+
+can we do this?if not why?
+
+
+10)
+struct st{
+	
+	int d:3;
+}obj;
+
+a)obj.d = 7
+print(obj.d) ?
+
+b)obj.d = 15
+print(obj.d) ?
+
+11)
+struct st {
+        int a:2;
+        int b;
+}obj;
+
+int main()
+{
+        obj.a = 2;
+        printf("%d  %d\n",obj.a,obj.b);
+}
+
+
+13)
+struct st {
+        unsigned int a:2;
+        int b;
+}obj;
+
+int main()
+{
+        obj.a = 2;
+        printf("%d  %d\n",obj.a,obj.b);
+}
+
+14)can we find the address of bit feilds?
+
+15)how can you pass the pack value through gcc?
+
+16)struct tag {
+		int a:0;
+		char a;
+	};
+	can we do this ? if not why?
+
+17)struct tag {
+			int a:-1;
+			char a;
+	};
+	can we do this ? if not why?
+
+18)struct tag {
+			int a:33;
+			char a;
+	};
+	can we do this ? if not why?
+
+
+
+ SOME THEORITICAL QUESTIONS:
+
+1)why padding?
+2)Is there any  relation between padding and internal hardware?
+3)what is bit field?why we need bitfeilds?
+4)differences between structures and union?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

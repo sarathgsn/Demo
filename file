@@ -1,0 +1,3 @@
+/tmp/cclWC3Gd.o: In function `main':
+printf.c:(.text+0xf): undefined reference to `print'
+collect2: error: ld returned 1 exit status

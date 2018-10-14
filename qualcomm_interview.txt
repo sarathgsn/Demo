@@ -1,0 +1,15 @@
+1. About Static  and Register variables (usages in depth).
+2. Why we cannot declare register varibales in globally.
+3. char var = 128 ; printf("%d", var);
+4. char *str = "hello   world   global     edge       "
+   remove the spaces after the last word then return string.
+   function declaration should be like this---->function(const char *);
+5. Process Vs Thread (why seperate stack for Thread).
+6. Pre emption(in depth).
+7. Deadlock.
+8. Racecondition.
+9. Semaphore Vs Mutex (Explanation with programming).
+10.Priority Inversion.
+11.About ISRs
+12.Spinlocks
+

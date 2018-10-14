@@ -1,0 +1,42 @@
+SYSLOG and KLOG and DMESG
+
+
+
+/var/log/syslog or /var/log/messages: 
+	general messages, as well as system-related information. Essentially, this log stores all activity data across the global system. Note that activity for Redhat-based systems, such as CentOS or Rhel, are stored in messages, while Ubuntu and other Debian-based systems are stored in Syslog.
+
+
+/var/log/auth.log or /var/log/secure:
+	 store authentication logs, including both successful and failed logins and authentication methods. Again, the system type dictates where authentication logs are stored; Debian/Ubuntu information is stored in /var/log/auth.log, while Redhat/CentrOS is stored in /var/log/secure.
+
+/var/log/boot.log:
+	 a repository of all information related to booting and any messages logged during startup.
+
+/var/log/kern:
+	 stores Kernel logs and warning data. This log is valuable for troubleshooting custom kernels as well.
+var/log/dmesg:
+	 messages relating to device drivers. The command dmesg can be used to view messages in this file.
+
+
+    /var/log/daemon.log: tracks services running in the background that perform important tasks, but has no graphical output.
+    /var/log/btmp: recordings of failed login attempts
+    /var/log/utmp: current login state, by user
+    /var/log/wtmp: login/logout history
+    /var/log/lastlog: information about the last logins for all users. This binary file can be read by command lastlog.
+    /var/log/pureftp.log: runs the pureftp process that listens for FTP connections. All connections, FTP logins, and authentication failures get logged here.
+    /var/log/spooler: rarely used and often empty. When used, it contains messages from USENET.
+    /var/log/xferlog: contains all FTP file transfer sessions, including information about the file name and user initiating FTP transfers.
+
+
+syslog contains all the messages except of type auth.
+klog and dmesg are same , but klog and syslog are diffrent
+
+
+
+
+
+
+dmesg prints the contents of the ring buffer. This information is also sent in real time to syslogd or klogd, when they are running, and ends up in /var/log/messages; when dmesg is most useful is in capturing boot-time messages from before syslogd and/or klogd started, so that they will be properly logged.
+
+
+

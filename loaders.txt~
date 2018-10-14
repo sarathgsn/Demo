@@ -1,0 +1,24 @@
+
+
+ linking process of a shared library is carried out at run-time by therun-time linker (ld-linux.so) which itself is a shared library. The run-time linker is responsible
+for loading shared libraries and binding symbols to applications before the applications gain
+control from operating systems to execute. 
+
+
+
+
+The run-time linker can also be called during the
+process of an application's execution to load additional shared libraries by using dlopen
+function. Symbols provided by these shared libraries can be bound by using symbols dlsym
+function, and this process is often referred to as dynamic loading. Once a shared library is
+loaded in physical memory, it's functions and variables can be shared by all processes that
+reference it, therefore the amount of used physical memory can be reduced.
+
+
+
+
+
+
+
+Type of Loaders
+The  different  types  of  loaders  are,  absolute  loader,  bootstrap  loader,  relocating loader  (relative  loader),  and,  direct  linking  loader.  The  following  sections  discuss  the functions and design of all these types of loaders

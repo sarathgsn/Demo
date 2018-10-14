@@ -1,0 +1,69 @@
+CACHE CONTROLLER (Best part of all)
+So we can say that cache is used to make the system fast by making the processing/execution fast. But that is not the end of cache. The question arises that how does cache knows that piece of data or commands/instructions are important and in near future processor might ask about it. The answer is cache controller that is associated with cache. It implements the following 2 principles upon cache:
+·         First Case: Cache is used to hold the instructions/data which are very commonly used or computer uses frequently.
+·         Second case: Cache is used to read the likely data; that is data which is to be most probably read in near future.
+Let us understand these by example.
+Take the first case. Consider an example. You are studying a subject and solving numerical related to a topic.
+·                  Now to solve the 1st numerical you need a formula, so you open chapter 1 of the book and look at the formula and then solve the numerical.
+·                  Now you move on to next numerical. To solve 2nd numerical you again need to access the chapter 1 and look at the formula.
+·                  Suppose this goes on…
+The better way will be to write the formula on a piece of paper and pin it on the desk. This will save time and speed up the process. This is how cache controller works hence making the most probable data to be present in cache even before the processor asks for it.
+Let us consider the second case. This is just an illustration to understand the case. Let us say that a user opens a folder which has 5 images named 1,2,3,4 and 5. Let us say a person opens 1 image.
+
+The three different types of mapping used for the purpose of cache memory are as follow,
+
+    Direct mapping
+    Associative mapping,
+    Set-Associative mapping.
+
+Replacement policy
+
+If all the cache lines in the cache are in use when the processor accesses a new line, one of the lines currently in the cache must be evicted to make room for the new line. The policy for selecting which line to evict is called the replacement policy. 
+
+When a program accesses a memory location that is not in the cache, it is called a cache miss.
+
+ When a program accesses a memory location that is not in the cache, it is called a cache miss. Since the processor then has to wait for the data to be fetched from the next cache level or from main memory before it can continue to execute, cache misses directly influence the performance of the application.
+
+It is hard to tell from just the number of misses if cache misses are causing performance problems in an application. The same number of misses will cause a much greater relative slowdown in a short-running application than in a long-running one.
+
+A more useful metric is the cache miss ratio, that is, the ratio of memory accesses that cause a cache miss. From the miss ratio you can usually tell whether cache misses may be a performance problem in an application.
+
+The cache miss ratio of an application depends on the size of the cache. A larger cache can hold more cache lines and is therefore expected to get fewer misses.
+
+The performance impact of a cache miss depends on the latency of fetching the data from the next cache level or main memory. For example, assume that you have a processor with two cache levels. A miss in the L1 cache then causes data to be fetched from the L2 cache which has a relatively low latency, so a quite high L1 miss ratio can be acceptable. A miss in the L2 cache on the other hand will cause a long stall while fetching data from main memory, so only a much lower L2 miss ratio is acceptable. 
+
+
+ Computers with multiple threads of execution, either with multiple processors, multiple cores per processor, or both, introduce additional complexity to caches. Different threads accessing the same data can now have private copies of the data in their local caches, but writes to the data by one thread must still be seen by all other threads. Some mechanism to keep the caches synchronized is needed.
+
+The mechanism that keeps the caches synchronized is called a cache coherence protocol. There are different possible coherence protocols, but most modern processors use the MESI protocol 
+
+The Cache Line
+•
+Caches operate on “lines”
+•
+Caches lines are a power of 2 in size
+•
+They contain multiple words of memory.
+•
+Usually between 16 and 128 bytes
+
+
+
+
+Write back && Write through::
+
+	 is a storage method in which data is written into the cache every time a change occurs, but is written into the corresponding location in main memory only at specified intervals or under certain conditions.
+
+When a data location is updated in write back mode, the data in cache is called fresh, and the corresponding data in main memory, which no longer matches the data in cache, is called stale. If a request for stale data in main memory arrives from another application program, the cache controller updates the data in main memory before the application accesses it.
+
+Write back optimizes the system speed because it takes less time to write data into cache alone, as compared with writing the same data into both cache and main memory. However, this speed comes with the risk of data loss in case of a crash or other adverse event.
+
+Write back is the preferred method of data storage in applications where occasional data loss events can be tolerated. In more critical applications such as banking and medical device control, an alternative method called write through practically eliminates the risk of data loss because every update gets written into both the main memory and the cache. In write through mode, the main memory data always stays fresh.
+
+
+
+
+
+
+
+
